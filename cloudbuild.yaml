@@ -1,0 +1,6 @@
+STEPS
+-name: "gcr.io/kaniko-project/executor:latest"
+args: ["--cache==true", "--cache-ttl=48h", "--destination==gcr.io/$PROJECT_ID/ToDoFB:Latest"]
+
+-name: "gcr.io/cloud-buildes/gcloud"
+args: ["beta", "run", "deploy", "ToDoFB:Latest"]
