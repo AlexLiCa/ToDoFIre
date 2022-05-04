@@ -52,8 +52,8 @@ def login_fb(mail,password):
         content = response.content
         data = response.json()
     elif response.status_code == 400:
-        print(response.status_code)
-        data = 400
+        data = "invalido"
+        print(data)
         
 
     return data
@@ -62,6 +62,7 @@ def login_fb(mail,password):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
         global user_auth
+        user_auth = False
         if request.method == 'GET':
           return render_template('login.html')
         else:
@@ -149,7 +150,7 @@ def delete(id):
 @app.route('/logout', methods=['GET'])
 def logout():
     user_auth = False
-    return redirect('/')
+    return redirect('/login')
  
 
 
