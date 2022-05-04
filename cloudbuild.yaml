@@ -1,6 +1,7 @@
 STEPS
+#construye una imagen que sea la base de nuestro projecto
 -name: "gcr.io/kaniko-project/executor:latest"
 args: ["--cache==true", "--cache-ttl=48h", "--destination==gcr.io/$PROJECT_ID/ToDoFB:Latest"]
 
 -name: "gcr.io/cloud-buildes/gcloud"
-args: ["beta", "run", "deploy", "ToDoFB:Latest"]
+args: ["beta", "run", "deploy", "ToDoFB:Latest", "--image", "gcr.io/$PROJECT_ID/to-do-list-app:latest", "--region"]
