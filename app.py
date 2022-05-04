@@ -19,7 +19,14 @@ user_ref = db.collection('Users')
 
 def read_tasks(ref):
     docs = ref.get()
-    return [task.to_dict() for task in docs]
+    all_tasks = []
+    # return [task.to_dict() for task in docs]
+    for doc in docs:
+        task = doc.to_dict()
+        task['id'] = doc.id
+        all_tasks.append(task)
+
+    return all_tasks
 
 def create_task(ref, name):
     task = {
@@ -28,6 +35,12 @@ def create_task(ref, name):
     'date':datetime.datetime.now()
 }
     ref.document().set(task)
+
+def update_task(ref,id):
+    ref.document(id).update({'check': True})
+
+def delete_task(ref,id):
+    ref.document(id).delete()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -43,8 +56,7 @@ def home():
                     completed.append(task)
                 else:
                     incompleted.append(task)
-            print(f"Completadas:{completed}")
-            print(f"incompletas:{incompleted}")
+          
         except:
             tasks = []
             print("error")
@@ -66,26 +78,22 @@ def home():
     return render_template('index.html', response=response)
 
 
-@app.route('/update/<int:id>', methods=['GET'])
-def update_task(id):
-    print(f"\nVas a actualizar {id}\n")
-    prueba=requests.get(url+"/"+str(id))
-    print(prueba)
+@app.route('/update/<string:id>', methods=['GET'])
+def update(id):
+    # print(f"\nVas a actualizar {id}\n")
     # return redirect('/')
     try:
-        requests.put(url+"/"+str(id), json={"check":True})
-        print(url+"/"+str(id))
+        update_task(tasks_ref, id)
         return redirect('/')
     except:
         return redirect('/')
 
 
-@app.route('/delete/<int:id>', methods=['GET'])
-def delete_task(id):
+@app.route('/delete/<string:id>', methods=['GET'])
+def delete(id):
     print(f"\nVas a borrar {id}\n")
     try:
-        requests.delete(url+"/"+str(id))
-        print(url+"/"+str(id))
+        delete_task(tasks_ref, id)
         return redirect('/')
     except:
     
