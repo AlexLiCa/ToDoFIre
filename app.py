@@ -52,14 +52,13 @@ def login_fb(mail,password):
         content = response.content
         data = response.json()
     elif response.status_code == 400:
-        print(response.content)
+        print(response.status_code)
+        data = 400
+        
 
-    return response.content
+    return data
 
        
-
-
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
         global user_auth
@@ -70,7 +69,7 @@ def login():
             password = request.form['password']
             user = login_fb(mail,password)
             try:
-                if mail == user['email']:
+                if user == user['email']:
                       user_auth = True
                       return  redirect('/')
                 else:
@@ -146,6 +145,12 @@ def delete(id):
     except:
     
         return redirect('/')
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    user_auth = False
+    return redirect('/')
+ 
 
 
 if __name__ == '__main__':
