@@ -69,7 +69,7 @@ def login():
             password = request.form['password']
             user = login_fb(mail,password)
             try:
-                if user == user['email']:
+                if mail == user['email']:
                       user_auth = True
                       return  redirect('/')
                 else:

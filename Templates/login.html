@@ -16,6 +16,9 @@
     <div class="cover-container d-flex w-50 h-100 p-3 mx-auto flex-column">
         <main class="px-3">
             <h1 class="my-text">Inicio de sesion </h1>
+            {% for message in get_flashed_messages() %}
+                <div class="aler alert-danger">{{ message }}</div>
+            {% endfor %}
         </main>
 
         <main class="mt-3 mb-3">
