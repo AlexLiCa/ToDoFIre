@@ -4,4 +4,4 @@ STEPS
 args: ["--cache==true", "--cache-ttl=48h", "--destination==gcr.io/$PROJECT_ID/ToDoFB:Latest"]
 
 -name: "gcr.io/cloud-buildes/gcloud"
-args: ["beta", "run", "deploy", "ToDoFB:Latest", "--image", "gcr.io/$PROJECT_ID/to-do-list-app:latest", "--region"]
+args: ["beta", "run", "deploy", "ToDoFB:Latest", "--image", "gcr.io/$PROJECT_ID/ToDoFBapp:latest", "--region"]
